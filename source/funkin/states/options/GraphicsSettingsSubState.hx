@@ -1,0 +1,131 @@
+package funkin.states.options;
+
+import funkin.data.ClientPrefs.VsyncMode;
+
+import flixel.text.FlxText;
+import flixel.FlxG;
+import flixel.FlxSprite;
+
+import funkin.backend.DebugDisplay;
+
+class GraphicsSettingsSubState extends BaseOptionsMenu
+{
+	var presetOption:Option;
+	var gpuCachingOption:Option;
+	var lowQualityOption:Option;
+	var shadersOption:Option;
+	var aaOption:Option;
+
+	public function new()
+	{
+		title = 'graphics';
+		rpcTitle = 'Graphics Settings Menu'; // for Discord Rich Presence
+
+		presetOption = new Option(Lang.str('opt_perfpreset', 'Performance Preset'),
+			Lang.str('opt_perfpreset_desc',
+				'Quickly apply a quality profile.\nLow boosts performance, High enables everything.\nCustom lets you configure each setting individually.'),
+			'performancePreset', 'string', 'Custom',
+			[Lang.str('choice_preset_low', 'Low'), Lang.str('choice_preset_medium', 'Medium'), Lang.str('choice_preset_high', 'High'), Lang.str('choice_generic_custom', 'Custom')],
+			['Low', 'Medium', 'High', 'Custom']);
+		presetOption.onChange = onChangePreset;
+		addOption(presetOption);
+
+		gpuCachingOption = new Option(Lang.str('opt_gpucaching', 'GPU Caching'), Lang.str('opt_gpucaching_desc', 'If checked, GPU caching will be enabled.'), 'gpuCaching', 'bool', false);
+		gpuCachingOption.onChange = markCustomPreset;
+		addOption(gpuCachingOption);
+
+		lowQualityOption = new Option(Lang.str('opt_lowquality', 'Low Quality'),
+			Lang.str('opt_lowquality_desc', 'If checked, disables some background details,\ndecreases loading times and improves performance.'),
+			'lowQuality', 'bool', false);
+		lowQualityOption.onChange = markCustomPreset;
+		addOption(lowQualityOption);
+
+		shadersOption = new Option(Lang.str('opt_shaders', 'Shaders'), Lang.str('opt_shaders_desc', 'If checked, shaders will be enabled across the mod'), 'shaders', 'bool', true);
+		shadersOption.onChange = markCustomPreset;
+		addOption(shadersOption);
+
+		aaOption = new Option(Lang.str('opt_antialiasing', 'Anti-Aliasing'),
+			Lang.str('opt_antialiasing_desc', 'If unchecked, disables anti-aliasing, increases performance\nat the cost of sharper visuals.'), 'globalAntialiasing', 'bool', true);
+		aaOption.onChange = () -> { onChangeAntiAliasing(); markCustomPreset(); };
+		addOption(aaOption);
+
+		var option:Option = new Option(Lang.str('opt_debugdisplaytype', 'Debug Display Type'),
+			Lang.str('opt_debugdisplaytype_desc',
+				'Handles what type of information to display in the top left of your screen.\nSimple displays FPS & Memory, and advanced displays the same alongside debug information.\nDisabled disables the counter entirely.'),
+			'fpsDisplayType', 'string', 'Simple', [Lang.str('choice_debug_simple', 'Simple'), Lang.str('choice_debug_advanced', 'Advanced'), Lang.str('choice_generic_disabled', 'Disabled')],
+			['Simple', 'Advanced', 'Disabled']);
+		addOption(option);
+
+		var option:Option = new Option(Lang.str('opt_framerate', 'Framerate'), Lang.str('opt_framerate_desc', "Pretty self explanatory, isn't it?"), 'framerate', 'int', 60);
+		addOption(option);
+
+		option.minValue = 60;
+		option.maxValue = 240;
+		option.displayFormat = '%v FPS';
+		option.onChange = onChangeFramerate;
+
+		var option:Option = new Option(Lang.str('opt_unlockedFramerate', 'Unlocked Framerate'), Lang.str('opt_unlockedFramerate_desc', "Pretty self explanatory, isn't it?"), 'unlockedFramerate',
+			'bool', false);
+		addOption(option);
+		option.onChange = onChangeFramerate;
+
+		var option:Option = new Option(Lang.str('opt_vsyncMode', 'VSync Mode'), Lang.str('opt_vsyncMode_desc', "Syncs the games Fps to your monitors refresh rate to prevent screen tearing"),
+			'vsyncMode', 'string', 'Off', [Lang.str('choice_generic_disabled', 'Disabled'), Lang.str('choice_generic_enabled', 'Enabled'), Lang.str('choice_vsync_adaptive', 'Adaptive')],
+			['Off', 'On', 'Adaptive']);
+		addOption(option);
+		option.onChange = () -> ClientPrefs.updateVsyncMode();
+
+		super();
+	}
+
+	function onChangePreset()
+	{
+		switch (ClientPrefs.performancePreset)
+		{
+			case 'Low':
+				ClientPrefs.gpuCaching = false;
+				ClientPrefs.lowQuality = true;
+				ClientPrefs.shaders = false;
+				ClientPrefs.globalAntialiasing = false;
+			case 'Medium':
+				ClientPrefs.gpuCaching = true;
+				ClientPrefs.lowQuality = false;
+				ClientPrefs.shaders = false;
+				ClientPrefs.globalAntialiasing = true;
+			case 'High':
+				ClientPrefs.gpuCaching = true;
+				ClientPrefs.lowQuality = false;
+				ClientPrefs.shaders = true;
+				ClientPrefs.globalAntialiasing = true;
+			default: // Custom — leave individual settings unchanged
+		}
+		onChangeAntiAliasing();
+		reloadCheckboxes();
+	}
+
+	function markCustomPreset()
+	{
+		if (ClientPrefs.performancePreset == 'Custom') return;
+		ClientPrefs.performancePreset = 'Custom';
+		presetOption.curOption = presetOption.storedValues.indexOf('Custom');
+		updateTextFrom(presetOption);
+	}
+
+	function onChangeAntiAliasing()
+	{
+		for (sprite in members)
+		{
+			if (sprite != null && (sprite is FlxSprite) && !(sprite is FlxText))
+			{
+				(cast sprite : FlxSprite).antialiasing = ClientPrefs.globalAntialiasing;
+			}
+		}
+
+		FlxSprite.defaultAntialiasing = ClientPrefs.globalAntialiasing;
+	}
+
+	function onChangeFramerate()
+	{
+		ClientPrefs.changeFps(ClientPrefs.framerate);
+	}
+}

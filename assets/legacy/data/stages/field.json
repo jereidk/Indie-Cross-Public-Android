@@ -1,0 +1,37 @@
+{
+  "defaultZoom": 0.61,
+  "isPixelStage": false,
+  "boyfriend": [770, 100],
+  "girlfriend": [400, 130],
+  "opponent": [100, 100],
+  "hide_girlfriend": true,
+  "dadZIndex": 3,
+  "bfZIndex": 3,
+  "gfZIndex": 3,
+  "stageObjects": [
+    {
+      "id": "bg",
+      "asset": "cup-bg-00",
+      "position": [-704, -396],
+      "scale": [2.8, 2.8],
+      "scrollFactor": [0.2, 0.2],
+      "zIndex": 1
+    },
+    {
+      "id": "trees",
+      "asset": "cup-bg-01",
+      "position": [-779, -396],
+      "scale": [2.8, 2.8],
+      "scrollFactor": [0.45, 0.45],
+      "zIndex": 2
+    },
+    {
+      "id": "foreground",
+      "asset": "cup-foreground",
+      "position": [-1188, -812],
+      "scale": [3.6, 3.6],
+      "scrollFactor": [1, 1],
+      "zIndex": 4
+    }
+  ]
+}

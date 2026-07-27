@@ -1,0 +1,22 @@
+{
+  "image": "characters/Cuphead_Remastered",
+  "scale": 1.74,
+  "sing_duration": 6,
+  "healthicon": "cuphead",
+  "position": [0, 0],
+  "camera_position": [0, 0],
+  "flip_x": false,
+  "no_antialiasing": false,
+  "healthbar_colour": -3407872,
+  "animations": [
+    {"anim": "idle", "name": "Cuphead_standing instance 1", "fps": 24, "loop": true, "indices": [], "offsets": [0, 0]},
+    {"anim": "singUP", "name": "Up instance 1", "fps": 24, "loop": false, "indices": [], "offsets": [-12, 51]},
+    {"anim": "singRIGHT", "name": "Right instance 1", "fps": 24, "loop": false, "indices": [], "offsets": [-20, -10]},
+    {"anim": "singDOWN", "name": "Down instance 1", "fps": 24, "loop": false, "indices": [], "offsets": [-24, -16]},
+    {"anim": "singLEFT", "name": "Left instance 1", "fps": 24, "loop": false, "indices": [], "offsets": [40, -8]},
+    {"anim": "intro", "name": "Cuphead Intro phase 2 instance 1", "fps": 24, "loop": false, "indices": [], "offsets": [49, 2]},
+    {"anim": "attack1", "name": "Shoot instance 1", "fps": 24, "loop": true, "indices": [], "offsets": [2, -3]},
+    {"anim": "dodge", "name": "Dodge instance 1", "fps": 24, "loop": false, "indices": [], "offsets": [32, -9]},
+    {"anim": "hit", "name": "Hurt instance 1", "fps": 24, "loop": false, "indices": [], "offsets": [120, 63]}
+  ]
+}

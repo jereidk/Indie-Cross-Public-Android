@@ -1,0 +1,25 @@
+{
+  "image": "characters/BoyFriend_Cuphead",
+  "scale": 1,
+  "sing_duration": 6,
+  "healthicon": "bf",
+  "position": [0, 0],
+  "camera_position": [0, 0],
+  "flip_x": true,
+  "no_antialiasing": false,
+  "healthbar_colour": -13520687,
+  "animations": [
+    {"anim": "idle", "name": "BF idle dance instance 1", "fps": 24, "loop": false, "indices": [], "offsets": [-4, 2]},
+    {"anim": "singUP", "name": "BF NOTE UP instance 1", "fps": 24, "loop": false, "indices": [], "offsets": [-51, 55]},
+    {"anim": "singRIGHT", "name": "BF NOTE RIGHT instance 1", "fps": 24, "loop": false, "indices": [], "offsets": [-38, 1]},
+    {"anim": "singDOWN", "name": "BF NOTE DOWN instance 1", "fps": 24, "loop": false, "indices": [], "offsets": [-32, -35]},
+    {"anim": "singLEFT", "name": "BF NOTE LEFT instance 1", "fps": 24, "loop": false, "indices": [], "offsets": [24, 3]},
+    {"anim": "singUPmiss", "name": "BF NOTE UP MISS instance 1", "fps": 24, "loop": false, "indices": [], "offsets": [-60, 17]},
+    {"anim": "singRIGHTmiss", "name": "BF NOTE RIGHT MISS instance 1", "fps": 24, "loop": false, "indices": [], "offsets": [-60, 24]},
+    {"anim": "singDOWNmiss", "name": "BF NOTE DOWN MISS instance 1", "fps": 24, "loop": false, "indices": [], "offsets": [-37, -17]},
+    {"anim": "singLEFTmiss", "name": "BF NOTE LEFT MISS instance 1", "fps": 24, "loop": false, "indices": [], "offsets": [-27, 19]},
+    {"anim": "attack", "name": "0BF attack instance 1", "fps": 24, "loop": false, "indices": [], "offsets": [1083, -7]},
+    {"anim": "hit", "name": "BF hit instance 1", "fps": 24, "loop": false, "indices": [], "offsets": [42, 53]},
+    {"anim": "dodge", "name": "boyfriend dodge instance 1", "fps": 24, "loop": false, "indices": [], "offsets": [-20, -7]}
+  ]
+}

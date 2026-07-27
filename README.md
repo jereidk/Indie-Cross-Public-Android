@@ -1,46 +1,43 @@
-<p align="center">
-	<a href="https://github.com/NMVTeam/NightmareVision">
-		<img src="assets/legacy/images/branding/UpdogBlack.png" alt="Made with NightmareVision Engine" width="325"/>
-	</a>
-</p>
+<h1 align="center">Indie Cross — Android Port</h1>
 
-<h1 align="center">VS Impostor Legacy — Android Port</h1>
-
-<p align="center"><b>Current version:</b> 1.1.2 &nbsp;·&nbsp; unofficial Android port, built on the <a href="https://github.com/NMVTeam/NightmareVision">NightmareVision engine</a></p>
+<p align="center"><b>Current version:</b> 0.1.0 &nbsp;·&nbsp; unofficial Android port, built on the <a href="https://github.com/jereidk/NightmareVision-Android-Support">NightmareVision Android backend</a></p>
 
 <p align="center">
-	Original PC mod available on
-	<a href="https://gamejolt.com/games/vsimpostor/643430">
-		<img src="https://s.gjcdn.net/img/favicon.png" width="16"/>
-		GameJolt
-	</a>
-	 and
-	<a href="https://gamebanana.com/mods/55652">
-		<img src="https://images.gamebanana.com/static/img/favicon/32x32.png" width="16"/>
-		GameBanana
+	Original PC mod repo:
+	<a href="https://github.com/jereidk/Indie-Cross-Public">
+		jereidk/Indie-Cross-Public
 	</a>
 </p>
 
 > [!NOTE]
 > APKs for this port are generated automatically via GitHub Actions on every push — check the [Actions tab](../../actions) for the latest build artifacts.
 
+> [!WARNING]
+> This port is under active development — `source/` and `assets/` currently still contain the Impostor Legacy Android template this repo was bootstrapped from, not Indie Cross's own content yet.
+
 ---
 
-A total-conversion mod for **Friday Night Funkin'**, in which you face off against colorful Among Us characters, across over 10 weeks and 57 songs. **VS Impostor: Legacy** is a from-the-ground-up remaster of the original 2023 mod, faithful to the original experience while adding new tweaks, features, awards, and cosmetics to collect — and maybe a few secrets to discover along the way.
+**FNF: Indie Cross** is a Friday Night Funkin' crossover mod bringing together Bendy and the Ink Machine, Cuphead, and Sans (Undertale) into one rhythm game experience.
 
-This repository adapts the mod to run natively on **Android**, on top of NightmareVision's existing mobile backend.
+This repository adapts the mod to run natively on **Android**, reusing the mobile backend and tooling originally built for the VS Impostor: Legacy Android port.
 
 ---
 
 ## Credits
 
-**Mod (VS Impostor Legacy)**
-* inky03 / motorfrog — original mod creator
+**Indie Cross**
+* Team 375 — mod creators
+
+**Original IPs featured**
+* [ninjamuffin99](https://twitter.com/ninja_muffin99), [PhantomArcade3K](https://twitter.com/phantomarcade3k), [Evilsk8r](https://twitter.com/evilsk8r), [Kawai Sprite](https://twitter.com/kawaisprite) — Friday Night Funkin'
+* Joey Drew Studios — Bendy and the Ink Machine
+* Studio MDHR — Cuphead
+* Toby Fox — Undertale
 
 **Android Port**
 * jereidk — port maintainer
 
-**NightmareVision Engine**
+**NightmareVision Android backend (this port's engine base)**
 * NMVTeam — engine authors
 * FNF BR (LumiCoder) — original mobile port base
 * StarNovaBR (StarNova) — mobile port contributions

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-convert_astc.py — Batch PNG → ASTC texture compressor for NightmareVision Android.
+convert_astc.py — Batch PNG → ASTC texture compressor for Indie Cross Android.
 
 Combines:
   - FunkinCrew/Funkin approach : JSON config with per-asset block overrides and
@@ -368,7 +368,7 @@ def convert_file(
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Convert PNG textures to ASTC for NightmareVision Android.",
+        description="Convert PNG textures to ASTC for Indie Cross Android.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )

@@ -1,47 +1,50 @@
-# NightmareVision Android Support - AGENTS.md
+# Indie Cross Android Port - AGENTS.md
 
-## Proyecto: VS Impostor Legacy Android Port
+## Proyecto: Indie Cross Android Port
 
-Puerto Android no oficial del mod **VS Impostor Legacy** para Friday Night Funkin', basado en el motor NightmareVision.
+Puerto Android no oficial del mod **Indie Cross** para Friday Night Funkin' (crossover con Cuphead, Bendy and the Ink Machine y Sans Undertale), construido reutilizando la infraestructura Android ya desarrollada para el port de VS Impostor: Legacy.
 
-**Repo original del motor:** https://github.com/NMVTeam/NightmareVision
-**Repo upstream del mod:** https://github.com/inky03/impostorLegacyPublic
+**Repo de este port:** https://github.com/jereidk/Indie-Cross-Public-Android
+**Repo de referencia del mod (fork, historial truncado al 22 ago 2022):** https://github.com/jereidk/Indie-Cross-Public
+**Template Android base:** https://github.com/jereidk/NightmareVision-Android-Support (rama `impostor-legacy-android`)
 
 ---
 
 ## 📋 Estado del Proyecto
 
-- **Versión actual:** 0.2.7
-- **Paquete:** com.motorfrog.impostor
-- **Rama activa:** `claude/impostor-legacy-android-79u6sz`
-- **Último commit:** `a01a945` - "Restore focusPlayer/tauntCharacter system and NOTE_TAUNT_P handler in PlayState"
+- **Versión actual:** 0.1.0 (recién inicializado, sin `source/`/`assets/` portados todavía)
+- **Paquete:** com.brightfyregit.indiecross
+- **Rama activa:** `impostor-legacy-android` (nombre heredado del template -- considerar renombrarla más adelante si genera confusión)
 
 ---
 
-## 📁 Estructura Clave
+## ⚠️ Diferencias clave vs. el template (Impostor Legacy)
+
+Este repo arrancó como una copia 1:1 de la infraestructura Android de Impostor Legacy -- pero Indie Cross tiene una arquitectura de motor bastante distinta en su Project.xml original. Antes de portar código a ciegas, tener en cuenta:
+
+- **Scripting:** Indie Cross usa Lua (`linc_luajit`) para mods/scripts. Impostor Legacy (y por lo tanto todo `funkin.scripts.*` de este template) usa `hscript-iris`. Habrá que decidir si se porta el sistema de scripting de Indie Cross tal cual, o si se adapta al hscript-iris ya existente en el template.
+- **Discord:** Indie Cross usa `discord_rpc` (no `hxdiscord_rpc`, el que ya trae este template).
+- **UI:** Indie Cross NO usa `haxeui-core`/`haxeui-flixel` (el template sí, para los editores tipo ChartEditorState).
+- **Librerías de assets:** Indie Cross organiza sus assets en libraries separadas (`songs`, `shared`, `bendy`, `sans`, `cup`, `customSkins`, `achievements`, `hiddenContent`, `notes`) en vez del único `assets/legacy` que usa este template. La estructura de `assets/` va a necesitar un rediseño, no un simple volcado de archivos.
+- **`content/NMV-Base-Game` (submódulo):** heredado del template, apunta a `jereidk/base-game-for-android`. Pendiente confirmar si aplica a Indie Cross o hay que reemplazarlo/quitarlo.
+
+---
+
+## 📁 Estructura Clave (heredada del template, sujeta a cambios)
 
 | Archivo/Directorio | Descripción |
 |---|---|
-| `source/funkin/states/PlayState.hx` | Estado principal de juego (taunt system, gameplay) |
-| `source/funkin/states/MainMenuState.hx` | Menú principal con añadidos Android |
-| `source/funkin/states/substates/WeekPickerSubstate.hx` | Selector de semanas (mobile virtual pad) |
-| `source/funkin/states/substates/GameOverSubstate.hx` | Pantalla de muerte con touch support |
-| `assets/legacy/data/characters/` | ~60+ personajes del mod (.hx scripts) |
-| `assets/legacy/data/stages/` | ~20+ stages/fondos del mod |
-| `.github/workflows/devBuilds.yml` | Build automation para Android (manual/triggered) |
-| `.github/workflows/nightlyBuilds.yml` | Nightly builds automáticos |
-| `Project.xml` | Configuración del proyecto Lime/OpenFL |
-| `dlc-registry.json` | Registro de contenido descargable |
+| `Project.xml` | Configuración del proyecto Lime/OpenFL (ya actualizado con identidad de Indie Cross) |
+| `dlc-registry.json` | Registro de contenido descargable (vacío, sin DLCs propios todavía) |
+| `.github/workflows/` | Build automation para Android (heredado del template, revisar nombres/triggers) |
+| `content/NMV-Base-Game/` | Submódulo heredado -- ver nota arriba |
+| `tools/convert_astc.py`, `tools/astc-config.json` | Pipeline de compresión ASTC para texturas (reutilizable tal cual) |
+| `source/` | Código heredado del template (Impostor Legacy) -- pendiente de reemplazo/adaptación con el código real de Indie Cross |
+| `assets/` | Assets heredados del template (Impostor Legacy) -- pendiente de reemplazo con los assets reales de Indie Cross |
 
 ---
 
 ## 🔧 Sistema de Compilación
-
-### GitHub Actions Workflows
-
-- **devBuilds.yml:** Se dispara manualmente o en push → genera APK debug
-- **nightlyBuilds.yml:** Builds nocturnos automáticos → genera APK release
-- Genera APKs para **arm64 + armv7** (fat APK)
 
 ### Compilación Local
 
@@ -59,107 +62,28 @@ haxelib run lime build android -release
 
 ---
 
-## 🎮 Funcionalidades Implementadas
-
-### Sistema de Taunt (Commit a01a945)
-- `focusPlayer` field público (accesible desde scripts como `parent.focusPlayer`)
-- `tauntCharacter` property alias para compatibilidad con scripts
-- `setFocusPlayerFromNote()` - rastrea qué personaje no-BF está cantando
-- Handler `NOTE_TAUNT_P` - reproduce animación 'hey' en focusPlayer
-- Sistema `canTaunt` para evitar spam de taunts
-
-### Mobile/Android Support
-- Virtual Pad con múltiples configuraciones (LEFT_FULL, A_B, etc.)
-- Touch navigation con `MobileNavUtil`
-- Botón "Back" de Android regresa al TitleState
-- Pantalla de muerte con tap en boyfriend para reiniciar
-- Nota: WeekPickerSubstate tiene animación de entrada diferente al upstream (falta `lockMovement` y tweens)
-
-### Upstream Differences (known)
-- **WeekPickerSubstate.hx:** Falta animación de entrada del upstream (`lockMovement`, `uiTweenOffsetY`, tweens de entrada)
-- **MainMenuState.hx:** Contiene todos los añadidos Android (virtual pad, credit text, Discord conditional, `clearStoredMemory()`)
-- **GameOverSubstate.hx:** Contiene añadidos móviles (virtual pad, touch handling para reinicio)
-- **PlayField.hx, FunkinScript.hx, PsychHUD.hx:** Identicos al upstream
-
-### Legacy Content
-- ~60 personajes en formato .hx (bf-ghost, charles, danger, esculent, etc.)
-- ~20 stages (airship, ejected, finale, grey, etc.)
-- Audio comprimido a 46kbps vorbis
-
----
-
 ## 📝 Notas de Desarrollo
 
-### Comparación con Upstream
-El proyecto compara archivos contra `/workspace/impostorlegacypublic/` (upstream).
-Comando para diff:
-```bash
-diff /workspace/impostorlegacypublic/source/funkin/states/XXX.hx source/funkin/states/XXX.hx
-```
+### Referencia del mod original
+El clon de referencia (`jereidk/Indie-Cross-Public`, truncado al commit `3c5d63f` -- "Update Prompt.hx", Sirox0, 22 ago 2022) sirve solo como fuente de archivos/assets a portar. El trabajo real de desarrollo se hace sobre este repo (`Indie-Cross-Public-Android`), no sobre esa referencia.
 
-### Commits Principales (por orden de importancia)
-1. `a01a945` - Restore focusPlayer/tauntCharacter system
-2. `6937c5e5` - port skiptotime pause option (chart-editor mode)
-3. `5bcf6a5` - Fix FreeplayState mobile support
-4. `fa95e0f` - Fix 3 mobile bugs
-5. `c6a3ca9` - Port upstream v1.1.2 changes
-
-### DLC System
-- Usa `dlc-registry.json` para contenido descargable
-- Soporta enriquecimiento desde GitHub Release API
-- `securitydlc` incluido en el registry
+### Keystore
+Se reutiliza el mismo `key.keystore` (alias `nvport`) que usaba el template -- decisión explícita del mantenedor, no requiere uno nuevo por proyecto.
 
 ---
 
-## 🔍 Investigación Archivo por Archivo (vs upstream)
+## 🚀 Próximos Pasos
 
-### ✅ Archivos Investigados (Junio 2026)
-
-| Archivo | Diferencias | Tipo | Estado |
-|---------|-------------|------|--------|
-| `PlayField.hx` | 0 | N/A | ✅ Identicos |
-| `FunkinScript.hx` | 0 | N/A | ✅ Identicos |
-| `PsychHUD.hx` | 0 | N/A | ✅ Identicos |
-| `MainMenuState.hx` | +88 lines | Android-only | ✅ Solo añadidos móviles |
-| `GameOverSubstate.hx` | +55 lines | Android-only | ✅ Solo añadidos móviles |
-| `WeekPickerSubstate.hx` | ±61 lines | Mixto | ⚠️ Falta animación entrada |
-| `OptionsState.hx` | +132 lines | Android-only | ✅ Solo añadidos móviles |
-| `Init.hx` | +131 lines | Android-only | ✅ Solo añadidos móviles |
-| `GraphicsSettingsSubState.hx` | +124 lines | Android-only | ✅ Solo añadidos móviles |
-| `ChartEditorState.hx` | +153 lines | Android-only | ✅ Solo añadidos móviles |
-
-### ⚠️ Diferencias Notables (Investigadas)
-
-**WeekPickerSubstate.hx:**
-- Falta: `bgThing:FlxSprite` field, `lockMovement:Bool`, `uiTweenOffsetY`
-- Falta: Tween de animación de entrada
-- Nuestra versión usa variable local `bullshit` en lugar de campo `bgThing`
-- El upstream tiene `goToSection(sect, true)` vs nuestro `goToSection(sect)`
-
-**ChartEditorState.hx:**
-- No tiene `PlayState.chartingMode = true` al inicio
-- Añadidos Android: chartMobileBtns, touch controls para el editor
-- Usa `tempBpm` en lugar de `_song.bpm` directamente
-- Discord presence diferente (para debugging)
-
-### ✅ Conclusión de Investigación
-
-**El fork Android NO está perdiendo ninguna funcionalidad del upstream.** Todas las diferencias son añadidos Android específicos (mobile controls, virtual pad, crash handlers, GPU options, etc.).
-
----
-
-## 🚀 Próximos Pasos Potenciales
-
-1. [ ] Compilar y probar APK en dispositivo Android
-2. [ ] Verificar sistema de taunts con todos los personajes
-3. [ ] Restaurar animación de entrada de WeekPickerSubstate (opcional)
-4. [ ] Push de cambios pendientes si los hay
+1. [ ] Decidir estrategia de scripting (adaptar Lua de Indie Cross vs. reusar hscript-iris del template)
+2. [ ] Rediseñar estructura de `assets/` según las libraries reales de Indie Cross
+3. [ ] Portar `source/` reemplazando el contenido específico de Impostor Legacy
+4. [ ] Resolver el submódulo `content/NMV-Base-Game`
+5. [x] Reemplazar íconos (`projFiles/icon/*`) con los de Indie Cross (hecho, tomados de `assets/compileData/` del repo de referencia)
 
 ---
 
 ## 🔗 Links Útiles
 
-- [Repo Android Support](https://github.com/jereidk/NightmareVision-Android-Support)
-- [Repo Upstream](https://github.com/inky03/impostorLegacyPublic)
-- [Repo Engine](https://github.com/NMVTeam/NightmareVision)
-- [Psych Engine](https://github.com/ShadowMario/FNF-PsychEngine)
+- [Repo de este port](https://github.com/jereidk/Indie-Cross-Public-Android)
+- [Repo de referencia del mod](https://github.com/jereidk/Indie-Cross-Public)
+- [Template base (Impostor Legacy Android)](https://github.com/jereidk/NightmareVision-Android-Support)

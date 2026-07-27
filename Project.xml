@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
     <!-- APP SETTINGS -->
-    <app title="VS IMPOSTOR LEGACY" file="ImpostorLegacy" packageName="com.motorfrog.impostor" package="com.motorfrog.impostor" main="Main" version="0.2.7" company="motorfrog"/>
+    <app title="Indie Cross" file="IndieCross" packageName="com.brightfyregit.indiecross" package="com.brightfyregit.indiecross" main="Main" version="0.1.0" company="Team 375"/>
 
     <window width="1280" height="720" fps="60" background="#000000" hardware="true" vsync="false"/>
     <window if="desktop" orientation="landscape" fullscreen="false" resizable="true" vsync="false"/>

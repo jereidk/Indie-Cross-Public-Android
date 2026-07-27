@@ -77,10 +77,19 @@ Se reutiliza el mismo `key.keystore` (alias `nvport`) que usaba el template -- d
 ## 🚀 Próximos Pasos
 
 1. [ ] Decidir estrategia de scripting (adaptar Lua de Indie Cross vs. reusar hscript-iris del template)
-2. [ ] Rediseñar estructura de `assets/` según las libraries reales de Indie Cross
-3. [ ] Portar `source/` reemplazando el contenido específico de Impostor Legacy
+2. [x] Contenido va directo a `assets/legacy/` (reemplazando lo de Impostor Legacy), NO como mod en `content/` -- `content/<mod>/` es un sistema de mods *opcionales* (requiere habilitarse en `modsList.txt`/menú de mods), no encaja con que este repo ES el juego.
+3. [~] Portar `source/`/`assets/` reemplazando el contenido específico de Impostor Legacy -- en progreso, semana 1 (Snake-Eyes) y tabla de logros ya portados, ver abajo.
 4. [ ] Resolver el submódulo `content/NMV-Base-Game`
 5. [x] Reemplazar íconos (`projFiles/icon/*`) con los de Indie Cross (hecho, tomados de `assets/compileData/` del repo de referencia)
+
+### Estado del porteo de contenido (assets/legacy/)
+
+- [x] Personajes `bfswag` (BoyFriend_Cuphead) y `cuphead` (Cuphead_Remastered) -- JSON nativo + atlas Sparrow copiados tal cual.
+- [x] Escenario `field` -- reconstruido de `PlayState.hx` (imperativo) a `stageObjects` declarativo.
+- [x] Canción `snake-eyes` (easy/normal/hard) -- chart copiado casi verbatim, el auto-corrector de charts legacy del motor ya entiende el formato de Indie Cross sin transformación manual.
+- [x] `week1.json` -- solo Snake-Eyes por ahora. Faltan Technicolor-Tussle y Knockout (Knockout necesita `angrycuphead`/`rainbf`, otro atlas distinto).
+- [x] `awards.json` -- las 17 logros reales de Indie Cross (de `Achievements.hx`), íconos copiados a `images/awards/`. **Solo la tabla de datos está portada** -- los que dependen de completar semana/canción se auto-desbloquean vía `GameFlags.unlockAwardsFromJson()` en cuanto esas semanas/canciones existan con ese `id` exacto en sus JSON; los que dependen de contadores/eventos (bone notes, ink notes, muertes en Despair, dodge-less, FC en Hard, derrotar a los jefes Nightmare) necesitan un `GameFlags.giveAchievement(id)` manual desde hscript, una vez se porten esas mecánicas -- no están wireados todavía.
+- [ ] Semanas 2-12 y freeplay siguen con contenido de Impostor Legacy sin portar (roto intencionalmente por ahora, parte de la transición).
 
 ---
 

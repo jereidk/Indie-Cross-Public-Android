@@ -29,7 +29,7 @@
 
 		<provider
 			android:name="mobile.backend.java.ModFolderDocumentsProvider"
-			android:authorities="com.motorfrog.impostor.documents"
+			android:authorities="com.brightfyregit.indiecross.documents"
 			android:exported="true"
 			android:grantUriPermissions="true"
 			android:permission="android.permission.MANAGE_DOCUMENTS">

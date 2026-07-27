@@ -1,4 +1,4 @@
-name: Impostor Legacy - Nightly Builds
+name: Indie Cross - Nightly Builds
 
 on:
   workflow_dispatch:
@@ -247,7 +247,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v7.0.1
         with:
-          name: VS Impostor Legacy (Android)
+          name: Indie Cross (Android)
           path: export/release/android/bin/app/build/outputs/apk/release/*.apk
           if-no-files-found: error
 
@@ -483,7 +483,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v7.0.1
         with:
-          name: VS Impostor Legacy (Android ARM64)
+          name: Indie Cross (Android ARM64)
           path: export/release/android/bin/app/build/outputs/apk/release/*.apk
           if-no-files-found: error
 
@@ -724,7 +724,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v7.0.1
         with:
-          name: VS Impostor Legacy (Android ARM32)
+          name: Indie Cross (Android ARM32)
           path: export/release/android/bin/app/build/outputs/apk/release/*.apk
           if-no-files-found: error
 
@@ -809,7 +809,7 @@ jobs:
       - name: Upload Windows artifact
         uses: actions/upload-artifact@v7.0.1
         with:
-          name: VS Impostor Legacy (Windows)
+          name: Indie Cross (Windows)
           path: export/release/windows/bin
 
   Linux:
@@ -911,5 +911,5 @@ jobs:
       - name: Upload Linux artifact
         uses: actions/upload-artifact@v7.0.1
         with:
-          name: VS Impostor Legacy (Linux)
+          name: Indie Cross (Linux)
           path: export/release/linux/bin

@@ -18,15 +18,17 @@ Puerto Android no oficial del mod **Indie Cross** para Friday Night Funkin' (cro
 
 ---
 
-## ⚠️ Diferencias clave vs. el template (Impostor Legacy)
+## ⚠️ Principio de arquitectura: el template ES el motor
 
-Este repo arrancó como una copia 1:1 de la infraestructura Android de Impostor Legacy -- pero Indie Cross tiene una arquitectura de motor bastante distinta en su Project.xml original. Antes de portar código a ciegas, tener en cuenta:
+**Este template (la infraestructura Android heredada del port de Impostor Legacy) es el motor/base del proyecto. Indie Cross es el CONTENIDO a portar, adaptado a la estructura y convenciones que ya existen acá -- no al revés.** No se reestructura el template para calzar con cómo estaba armado Indie Cross originalmente (Project.xml de la referencia, scripting, libraries de assets, etc.); esas son solo referencia de QUÉ hay que portar, no de CÓMO debe organizarse acá.
 
-- **Scripting:** Indie Cross usa Lua (`linc_luajit`) para mods/scripts. Impostor Legacy (y por lo tanto todo `funkin.scripts.*` de este template) usa `hscript-iris`. Habrá que decidir si se porta el sistema de scripting de Indie Cross tal cual, o si se adapta al hscript-iris ya existente en el template.
-- **Discord:** Indie Cross usa `discord_rpc` (no `hxdiscord_rpc`, el que ya trae este template).
-- **UI:** Indie Cross NO usa `haxeui-core`/`haxeui-flixel` (el template sí, para los editores tipo ChartEditorState).
-- **Librerías de assets:** Indie Cross organiza sus assets en libraries separadas (`songs`, `shared`, `bendy`, `sans`, `cup`, `customSkins`, `achievements`, `hiddenContent`, `notes`) en vez del único `assets/legacy` que usa este template. La estructura de `assets/` va a necesitar un rediseño, no un simple volcado de archivos.
-- **`content/NMV-Base-Game` (submódulo):** heredado del template, apunta a `jereidk/base-game-for-android`. Pendiente confirmar si aplica a Indie Cross o hay que reemplazarlo/quitarlo.
+Diferencias conocidas del Project.xml original de Indie Cross (relevantes solo como referencia de contenido a adaptar, no como objetivo de arquitectura):
+
+- **Scripting:** Indie Cross usaba Lua (`linc_luajit`). Acá se mantiene `hscript-iris` (el que ya trae el template) -- cualquier script de Indie Cross se adapta a hscript-iris al portarlo, no se agrega un runtime de Lua en paralelo.
+- **Discord:** Indie Cross usaba `discord_rpc`. Acá se mantiene `hxdiscord_rpc` (ya en el template).
+- **UI:** Indie Cross no usaba `haxeui-core`/`haxeui-flixel`. Acá se mantienen (los editores tipo ChartEditorState del template dependen de esto).
+- **Librerías de assets:** Indie Cross organizaba sus assets en libraries separadas (`songs`, `shared`, `bendy`, `sans`, `cup`, `customSkins`, `achievements`, `hiddenContent`, `notes`). Al portar los assets, se adaptan al layout único (`assets/legacy`-style) que ya usa este template, no se replica esa separación en libraries.
+- **`content/NMV-Base-Game` (submódulo):** heredado del template, apunta a `jereidk/base-game-for-android`. Se mantiene por ahora salvo que surja una razón concreta para sacarlo -- es parte de la infraestructura base, no de lo que se porta.
 
 ---
 

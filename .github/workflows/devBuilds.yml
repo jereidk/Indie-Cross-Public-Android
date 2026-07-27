@@ -1,4 +1,4 @@
-name: Impostor Legacy - Dev Builds
+name: Indie Cross - Dev Builds
 
 on:
   workflow_dispatch:
@@ -536,7 +536,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v7.0.1
         with:
-          name: VS Impostor Legacy (Android)
+          name: Indie Cross (Android)
           # Gradle output subfolder is ALWAYS "release" here -- Lime always runs
           # assembleRelease to package the APK regardless of the Haxe-level
           # -debug/-release flag (that flag only controls the native .so
@@ -1021,7 +1021,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v7.0.1
         with:
-          name: VS Impostor Legacy (Android ARM64)
+          name: Indie Cross (Android ARM64)
           # Gradle output subfolder is ALWAYS "release" here -- Lime always runs
           # assembleRelease to package the APK regardless of the Haxe-level
           # -debug/-release flag (that flag only controls the native .so
@@ -1478,7 +1478,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v7.0.1
         with:
-          name: VS Impostor Legacy (Android ARM32)
+          name: Indie Cross (Android ARM32)
           # Gradle output subfolder is ALWAYS "release" here -- Lime always runs
           # assembleRelease to package the APK regardless of the Haxe-level
           # -debug/-release flag (that flag only controls the native .so
@@ -2015,7 +2015,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v7.0.1
         with:
-          name: VS Impostor Legacy (Android ARM64, debug symbols)
+          name: Indie Cross (Android ARM64, debug symbols)
           path: export/release/android/bin/app/build/outputs/apk/release/*.apk
           if-no-files-found: error
 
